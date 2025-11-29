@@ -1,0 +1,1379 @@
+definitions:
+  AdminService.AdminCreate:
+    properties:
+      deleted:
+        type: integer
+      password:
+        type: string
+      role:
+        type: string
+      status:
+        type: integer
+      username:
+        type: string
+    type: object
+  AdminService.AdminLoginRequest:
+    properties:
+      auth_status:
+        description: 记住登录状态：1-记住 2-不记住
+        type: integer
+      device_id:
+        description: 设备唯一标识，用于多设备管理
+        type: string
+      ip:
+        description: 当前登录IP地址
+        type: string
+      password:
+        description: 登录密码，必填
+        type: string
+      username:
+        description: 登录用户名，必填
+        type: string
+    required:
+      - auth_status
+      - device_id
+      - ip
+      - password
+      - username
+    type: object
+  AdminService.BannedUserRequest:
+    properties:
+      username:
+        description: 待禁用的管理员用户名
+        type: string
+    required:
+      - username
+    type: object
+  AdminService.ChangeAdminPasswordRequest:
+    properties:
+      new_password:
+        description: 新密码
+        type: string
+      username:
+        description: 管理员用户名
+        type: string
+    required:
+      - new_password
+      - username
+    type: object
+  AdminService.DeletedUserRequest:
+    properties:
+      username:
+        description: 待删除的管理员用户名
+        type: string
+    required:
+      - username
+    type: object
+  AdminService.LoginCredentialsRequest:
+    properties:
+      auth_status:
+        description: 记住登录状态：1-记住 2-不记住
+        type: integer
+      device_id:
+        description: 设备唯一标识，用于多设备会话管理
+        type: string
+      ip:
+        description: 登录IP地址，用于安全审计
+        type: string
+      password:
+        description: 登录明文密码，由后端加密验证
+        type: string
+      rt:
+        description: 刷新令牌(Refresh Token)，用于获取新访问令牌
+        type: string
+      username:
+        description: 登录用户名，唯一标识
+        type: string
+    type: object
+  InviteCodeService.CreateInviteFilter:
+    properties:
+      beginTime:
+        type: string
+      code:
+        description: 邀请码
+        type: string
+      deleted:
+        description: 是否删除 1 未删除 2 已删除
+        type: integer
+      endTime:
+        type: string
+      expired:
+        description: 是否过期 1 未过期 2 已过期
+        type: integer
+      ids:
+        items:
+          type: string
+        type: array
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      status:
+        description: 使用状态 1 已使用 2 未过期
+        type: integer
+      username:
+        description: 绑定的用户名，""为未绑定
+        type: string
+    type: object
+  InviteCodeService.UpdateInviteCode:
+    properties:
+      days:
+        description: 过期延后天数
+        type: integer
+      ids:
+        items:
+          type: string
+        type: array
+      status:
+        description: 使用状态 1 已使用 2 未过期
+        type: integer
+    type: object
+  InviteController.GenerateCodesRequest:
+    properties:
+      num:
+        type: integer
+    required:
+      - num
+    type: object
+  InviteController.InviteCodesRequest:
+    properties:
+      codeIds:
+        items:
+          type: string
+        type: array
+    required:
+      - codeIds
+    type: object
+  UserService.ChangePasswordSchema:
+    properties:
+      new_password:
+        type: string
+      old_password:
+        type: string
+    required:
+      - new_password
+      - old_password
+    type: object
+  UserService.CreateUser:
+    properties:
+      code:
+        type: string
+      contact_info:
+        description: 联系信息-用于找回密码
+        type: string
+      contact_type:
+        description: 联系渠道-用于找回密码
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+      - code
+      - password
+      - username
+    type: object
+  UserService.ForgetUser:
+    properties:
+      code:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+      - code
+      - password
+      - username
+    type: object
+  UserService.UserLogin:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+      - password
+      - username
+    type: object
+  adminSwaggerResponse.ActiveAdminUserErrorResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: err msg
+        type: string
+    type: object
+  adminSwaggerResponse.ActiveAdminUserSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: 管理员 xxx 已启用
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  adminSwaggerResponse.AdminListErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: err msg
+        type: string
+    type: object
+  adminSwaggerResponse.AdminListSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: '{page:1, page_size: 10, total_pages: 100,data: [id1_Detail, id2_Detail,
+          id3_Detail]}'
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  adminSwaggerResponse.AdminLoginErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: 密码错误
+        type: string
+    type: object
+  adminSwaggerResponse.AdminLoginSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: eyJhbGciOiJIUzI1N...
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  adminSwaggerResponse.AdminRememberErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: err_msg
+        type: string
+    type: object
+  adminSwaggerResponse.AdminRememberSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: '{token:eyJhbGciOiJIUzI1N...,rt:eyJhbGciOiJIUzI1N...}'
+        type: string
+      message:
+        example: ok
+        type: string
+    type: object
+  adminSwaggerResponse.BannedAdminUserErrorResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: err msg
+        type: string
+    type: object
+  adminSwaggerResponse.BannedAdminUserSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: 管理员 xxx 已被禁用
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  adminSwaggerResponse.ChangeAdminPasswordErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: err msg
+        type: string
+    type: object
+  adminSwaggerResponse.ChangeAdminPasswordSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: 管理员 xxx 密码已更新
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  adminSwaggerResponse.CreateAdminErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: 管理员 xxx 已存在
+        type: string
+    type: object
+  adminSwaggerResponse.CreateAdminSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: 管理员 xxx 已创建
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  adminSwaggerResponse.DeleteAdminErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: err msg
+        type: string
+    type: object
+  adminSwaggerResponse.DeleteAdminSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: 管理员 xxx 已删除
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  adminSwaggerResponse.LogOutErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: err msg
+        type: string
+    type: object
+  adminSwaggerResponse.LogOutSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: 登出成功
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.DeleteInviteCodeErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: error msg
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.DeleteInviteCodeSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: 10
+        type: integer
+      msg:
+        example: ok
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.GenerateAndInsertCodeErrorResponse:
+    properties:
+      code:
+        description: 状态码
+        example: -1
+        type: integer
+      data:
+        description: 数据
+        example: "null"
+        type: string
+      msg:
+        description: 信息
+        example: error msg
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.GenerateAndInsertCodeSuccessResponse:
+    properties:
+      code:
+        description: 状态码
+        example: 1
+        type: integer
+      data:
+        description: 数据
+        example: id string
+        type: string
+      msg:
+        description: 信息
+        example: ok
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.GenerateAndInsertCodesErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: error msg
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.GenerateAndInsertCodesSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: 10
+        type: integer
+      msg:
+        example: ok
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.GetInviteCodeErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: error msg
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.GetInviteCodeSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: '{id: codeID, code: code, username: username, status: 1, expired:
+          1, expiredTime: 2025-01-01 00:00:00, deleted: 1}'
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.ListInviteCodesErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: error msg
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.ListInviteCodesSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: '{page:1, pagesize: 10, totalPages: 100,data: [id1_Detail, id2_Detail,
+          id3_Detail]}'
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.UpdateInviteCodeErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: error msg
+        type: string
+    type: object
+  inviteCodeSwaggerResponse.UpdateInviteCodeSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: 10
+        type: integer
+      msg:
+        example: ok
+        type: string
+    type: object
+  swaggerResponse.ErrorResponseDoc:
+    properties:
+      code:
+        description: 状态码
+        example: -1
+        type: integer
+      data:
+        description: 数据
+        example: "null"
+        type: string
+      msg:
+        description: 信息
+        example: 参数错误
+        type: string
+    type: object
+  swaggerResponse.SuccessResponseDoc:
+    properties:
+      code:
+        description: 状态码
+        example: 1
+        type: integer
+      data:
+        description: 数据
+        example: any
+        type: string
+      msg:
+        description: 信息
+        example: ok
+        type: string
+    type: object
+  userSwaggerResponse.ChangePasswordErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: err msg
+        type: string
+    type: object
+  userSwaggerResponse.ChangePasswordForgetSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  userSwaggerResponse.ForgetErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: err msg
+        type: string
+    type: object
+  userSwaggerResponse.ForgetSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  userSwaggerResponse.LoginErrorResponse:
+    properties:
+      code:
+        example: -1/-2/-3
+        type: string
+      data:
+        example: '-1:null;-2:{num: 3, seconds: 60}; -3:null'
+        type: string
+      msg:
+        example: err msg
+        type: string
+    type: object
+  userSwaggerResponse.LoginSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: '{token: eyJhbGciOiJIUzI1N...}'
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+  userSwaggerResponse.RegisterUserErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: err msg
+        type: string
+    type: object
+  userSwaggerResponse.RenameUserErrorResponse:
+    properties:
+      code:
+        example: -1
+        type: integer
+      data:
+        example: "null"
+        type: string
+      msg:
+        example: 参数错误 / 用户名已存在 / 用户不存在
+        type: string
+    type: object
+  userSwaggerResponse.RenameUserSuccessResponse:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        example: 修改成功
+        type: string
+      msg:
+        example: ok
+        type: string
+    type: object
+info:
+  contact: { }
+paths:
+  /admin/active:
+    put:
+      consumes:
+        - application/json
+      description: 启用指定管理员（恢复被禁用的账户）
+      parameters:
+        - description: 被启用用户名
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/AdminService.BannedUserRequest'
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.ActiveAdminUserSuccessResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.ActiveAdminUserErrorResponse'
+      summary: 启用管理员
+      tags:
+        - 管理员管理
+  /admin/ban:
+    put:
+      consumes:
+        - application/json
+      description: 禁用指定管理员
+      parameters:
+        - description: 被禁用用户名
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/AdminService.BannedUserRequest'
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.BannedAdminUserSuccessResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.BannedAdminUserErrorResponse'
+      summary: 禁用管理员
+      tags:
+        - 管理员管理
+  /admin/change_pwd:
+    put:
+      consumes:
+        - application/json
+      description: 修改指定管理员密码
+      parameters:
+        - description: 用户名和新密码
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/AdminService.ChangeAdminPasswordRequest'
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.ChangeAdminPasswordSuccessResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.ChangeAdminPasswordErrorResponse'
+      summary: 修改管理员密码
+      tags:
+        - 管理员管理
+  /admin/create:
+    post:
+      consumes:
+        - application/json
+      description: 创建新的管理员账户
+      parameters:
+        - description: 用户名、密码、角色
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/AdminService.AdminCreate'
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.CreateAdminSuccessResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.CreateAdminErrorResponse'
+      summary: 创建管理员
+      tags:
+        - 管理员管理
+  /admin/delete:
+    delete:
+      consumes:
+        - application/json
+      description: 根据用户名删除管理员
+      parameters:
+        - description: 被删除用户名
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/AdminService.DeletedUserRequest'
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.DeleteAdminSuccessResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.DeleteAdminErrorResponse'
+      summary: 删除管理员
+      tags:
+        - 管理员管理
+  /admin/list:
+    post:
+      consumes:
+        - application/json
+      description: 获取分页管理员列表，可过滤用户名和状态
+      parameters:
+        - description: 可选，删除状态筛选
+          in: query
+          name: deleted
+          type: integer
+        - collectionFormat: csv
+          description: 可选，指定ID列表筛选
+          in: query
+          items:
+            type: string
+          name: ids
+          type: array
+        - description: 当前页码
+          in: query
+          name: page
+          type: integer
+        - description: 每页数量
+          in: query
+          name: page_size
+          type: integer
+        - description: 可选，角色筛选
+          in: query
+          name: role
+          type: string
+        - description: 可选，状态筛选
+          in: query
+          name: status
+          type: integer
+        - description: 可选，用户名模糊筛选
+          in: query
+          name: username
+          type: string
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.AdminListSuccessResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/swaggerResponse.ErrorResponseDoc'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.AdminListErrorResponse'
+      summary: 获取管理员列表
+      tags:
+        - 管理员管理
+  /admin/login:
+    post:
+      consumes:
+        - application/json
+      description: 使用用户名密码登录，返回 JWT
+      parameters:
+        - description: 用户名和密码
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/AdminService.AdminLoginRequest'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.AdminLoginSuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.AdminLoginErrorResponse'
+      summary: 管理员登录
+      tags:
+        - 管理员管理
+  /admin/logout:
+    post:
+      consumes:
+        - application/json
+      description: 登出当前管理员
+      parameters:
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.LogOutSuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.LogOutErrorResponse'
+      summary: 管理员登出
+      tags:
+        - 管理员管理
+  /admin/remember:
+    post:
+      consumes:
+        - application/json
+      description: 登录后返回访问令牌和刷新令牌
+      parameters:
+        - description: 登录凭证
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/AdminService.LoginCredentialsRequest'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.AdminRememberSuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/adminSwaggerResponse.AdminRememberErrorResponse'
+      summary: 管理员记住登录
+      tags:
+        - 管理员管理
+  /invite/create_batch:
+    post:
+      consumes:
+        - application/json
+      description: 批量生成指定数量的邀请码
+      parameters:
+        - description: 生成数量
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/InviteController.GenerateCodesRequest'
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.GenerateAndInsertCodesSuccessResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/swaggerResponse.ErrorResponseDoc'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.GenerateAndInsertCodesErrorResponse'
+      summary: 批量生成邀请码
+      tags:
+        - 邀请码管理
+  /invite/create_one:
+    post:
+      consumes:
+        - application/json
+      description: 生成一个新的邀请码
+      parameters:
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.GenerateAndInsertCodeSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.GenerateAndInsertCodeErrorResponse'
+      summary: 生成单个邀请码
+      tags:
+        - 邀请码管理
+  /invite/delete:
+    delete:
+      consumes:
+        - application/json
+      description: 根据 ID 列表删除邀请码
+      parameters:
+        - description: ID 列表
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/InviteCodeService.CreateInviteFilter'
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.DeleteInviteCodeSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.DeleteInviteCodeErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/swaggerResponse.ErrorResponseDoc'
+      summary: 删除邀请码
+      tags:
+        - 邀请码管理
+  /invite/get:
+    get:
+      consumes:
+        - application/json
+      description: 根据 ObjectID 或 code 字段获取邀请码信息
+      parameters:
+        - description: 邀请码
+          in: query
+          name: code
+          required: true
+          type: string
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 成功返回邀请码信息
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.GetInviteCodeErrorResponse'
+        "400":
+          description: 查询失败或未找到
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.GetInviteCodeSuccessResponse'
+        "422":
+          description: 参数错误
+          schema:
+            $ref: '#/definitions/swaggerResponse.ErrorResponseDoc'
+      summary: 获取邀请码
+      tags:
+        - 邀请码管理
+  /invite/list:
+    post:
+      consumes:
+        - application/json
+      description: 根据分页参数和状态获取邀请码列表
+      parameters:
+        - description: 分页参数和过滤条件
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/InviteCodeService.CreateInviteFilter'
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.ListInviteCodesSuccessResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/swaggerResponse.ErrorResponseDoc'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.ListInviteCodesErrorResponse'
+      summary: 分页获取邀请码列表
+      tags:
+        - 邀请码管理
+  /invite/reback:
+    post:
+      consumes:
+        - application/json
+      description: 根据 ID 查询邀请码信息
+      parameters:
+        - description: 邀请码 ID 列表
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/InviteController.InviteCodesRequest'
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swaggerResponse.SuccessResponseDoc'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swaggerResponse.ErrorResponseDoc'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/swaggerResponse.ErrorResponseDoc'
+      summary: 批量回查邀请码
+      tags:
+        - 邀请码管理
+  /invite/update:
+    put:
+      consumes:
+        - application/json
+      description: 更新指定邀请码的状态
+      parameters:
+        - description: 更新数据
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/InviteCodeService.UpdateInviteCode'
+        - description: Bearer token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.UpdateInviteCodeSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/inviteCodeSwaggerResponse.UpdateInviteCodeErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/swaggerResponse.ErrorResponseDoc'
+      summary: 更新邀请码状态
+      tags:
+        - 邀请码管理
+  /user/change_pwd:
+    put:
+      consumes:
+        - application/json
+      description: 已登录用户通过旧密码修改为新密码
+      parameters:
+        - description: 修改密码请求体
+          in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/UserService.ChangePasswordSchema'
+        - description: 用户 JWT Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 密码修改成功
+          schema:
+            $ref: '#/definitions/userSwaggerResponse.ChangePasswordForgetSuccessResponse'
+        "400":
+          description: 参数错误或修改失败
+          schema:
+            $ref: '#/definitions/userSwaggerResponse.ChangePasswordErrorResponse'
+      summary: 修改密码
+      tags:
+        - 用户
+  /user/forget:
+    put:
+      consumes:
+        - application/json
+      description: 用户忘记密码时，通过用户名和邀请码重置密码
+      parameters:
+        - description: 忘记密码请求体
+          in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/UserService.ForgetUser'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 密码重置成功
+          schema:
+            $ref: '#/definitions/userSwaggerResponse.ForgetSuccessResponse'
+        "400":
+          description: 参数错误或重置失败
+          schema:
+            $ref: '#/definitions/userSwaggerResponse.ForgetErrorResponse'
+      summary: 忘记密码
+      tags:
+        - 用户
+  /user/login:
+    post:
+      consumes:
+        - application/json
+      description: |-
+        使用用户名和密码登录，返回不同状态码：
+        - code = -1：普通错误（返回累计错误次数）
+        - code = -2：达到锁定阈值（返回剩余解锁秒数，用于前端倒计时）
+        - code = -3：异常请求（例如请求过于频繁，疑似机器人）
+        - code = 1：登录成功（返回 token）
+      parameters:
+        - description: 登录请求参数
+          in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/UserService.UserLogin'
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 登录成功,返回token
+          schema:
+            $ref: '#/definitions/userSwaggerResponse.LoginSuccessResponse'
+        "400":
+          description: 登录失败，-1普通错误，-2限制登录倒计时，-3异常请求
+          schema:
+            $ref: '#/definitions/userSwaggerResponse.LoginErrorResponse'
+      summary: 用户登录
+      tags:
+        - 用户
+  /user/register:
+    post:
+      consumes:
+        - application/json
+      description: 使用用户名、密码和邀请码注册用户
+      parameters:
+        - description: 用户注册信息
+          in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/UserService.CreateUser'
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: 注册成功
+          schema:
+            $ref: '#/definitions/swaggerResponse.SuccessResponseDoc'
+        "400":
+          description: 参数错误或注册失败
+          schema:
+            $ref: '#/definitions/userSwaggerResponse.RegisterUserErrorResponse'
+      summary: 注册新用户
+      tags:
+        - 用户
+  /user/rename:
+    put:
+      consumes:
+        - application/json
+      description: 修改当前登录用户的用户名
+      parameters:
+        - description: 新的用户名
+          in: query
+          name: username
+          required: true
+          type: string
+        - description: 用户 JWT Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 修改成功
+          schema:
+            $ref: '#/definitions/userSwaggerResponse.RenameUserSuccessResponse'
+        "400":
+          description: 参数错误 / 用户名已存在 / 用户不存在
+          schema:
+            $ref: '#/definitions/userSwaggerResponse.RenameUserErrorResponse'
+      summary: 修改用户名
+      tags:
+        - 用户
+swagger: "2.0"

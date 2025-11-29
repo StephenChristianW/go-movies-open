@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Go + Gin + Swag 使用记录</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            color: #333;
+        }
+
+        /* 布局 */
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        nav {
+            width: 220px;
+            background: #1e3a8a;
+            color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        nav h2 {
+            font-size: 18px;
+            margin-top: 0;
+            color: #fff;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 10px 0;
+        }
+
+        nav ul li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav ul li a:hover {
+            color: #facc15;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        h1, h2, h3 {
+            color: #1e3a8a;
+        }
+
+        pre {
+            background: #e5e7eb;
+            color: #111;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid #3b82f6;
+        }
+
+        code {
+            color: #d6336c;
+            font-weight: bold;
+        }
+
+        .note {
+            color: #b45309;
+            font-weight: bold;
+        }
+
+        .tip {
+            color: #065f46;
+            font-weight: bold;
+        }
+
+        a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav>
+        <h2>文档目录</h2>
+        <ul>
+            <li><a href="#install">1. 安装工具</a></li>
+            <li><a href="#init">2. 初始化 Swagger</a></li>
+            <li><a href="#router">3. 配置 Gin 路由</a></li>
+            <li><a href="#controller">4. Controller 注释规范</a></li>
+            <li><a href="#update">5. 更新文档</a></li>
+            <li><a href="#response">6. 响应类型</a></li>
+            <li><a href="#notes">7. 注意事项</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>Go + Gin + Swag 使用记录</h1>
+
+        <h2 id="install">1. 安装工具</h2>
+        <pre><code># 安装 swag CLI
+go install github.com/swaggo/swag/cmd/swag@v1.6.0
+
+# 安装 Gin Swagger 中间件和 Swagger UI
+go get github.com/swaggo/gin-swagger@v1.6.0
+go get github.com/swaggo/files@v0.9.0
+</code></pre>
+        <p class="note">注意：新版本1.7.0需要 Go 1.24+，低版本用 v1.6.0</p>
+
+        <h2 id="init">2. 初始化 Swagger 文档</h2>
+        <pre><code># 在项目根目录执行
+swag init -g StacBuilder.go
+</code></pre>
+        <ul>
+            <li>-g 指定 main 或入口 handler 文件</li>
+            <li>生成 docs/ 文件夹，包含 swagger.json、swagger.yaml 和 docs.go</li>
+        </ul>
+
+        <h2 id="router">3. 配置 Gin 路由</h2>
+        <pre><code>import (
+    _ "项目路径/docs"           // 引入自动生成的 docs
+    swaggerFiles "github.com/swaggo/files"
+    ginSwagger "github.com/swaggo/gin-swagger"
+)
+
+router := gin.Default()
+router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+</code></pre>
+        <p class="tip">访问：<a
+                href="http://localhost:8080/swagger/index.html">http://localhost:8080/swagger/index.html</a></p>
+
+        <h2 id="controller">4. Controller 注释规范</h2>
+        <pre><code>// @Summary 生成单个邀请码
+// @Description 生成单个邀请码
+// @Tags InviteCode
+// @Accept json
+// @Produce json
+// @Success 200 {object} controller.SuccessResponseDoc
+// @Failure 422 {object} controller.ErrorResponseDoc
+// @Router /invite/create_one [post]
+func (InviteCodeHandler) GenerateAndInsertCode(c *gin.Context) {}
+</code></pre>
+
+        <h2 id="update">5. 更新文档</h2>
+        <pre><code>swag init -g StacBuilder.go</code></pre>
+        <p>每次新增或修改接口，重新执行即可更新 docs</p>
+
+        <h2 id="response">6. 响应类型</h2>
+        <pre><code>type SuccessResponseDoc struct {
+    Code int         `json:"code"`
+    Msg  string      `json:"msg"`
+    Data interface{} `json:"loginData"`
+}
+
+type ErrorResponseDoc struct {
+    Code int    `json:"code"`
+    Msg  string `json:"msg"`
+}
+</code></pre>
+        <p>在注释里引用：<code>@Success 200 {object} controller.SuccessResponseDoc</code></p>
+
+        <h2 id="notes">7. 注意事项</h2>
+        <ul>
+            <li>swag 对类型定义严格，必须能在编译期找到类型</li>
+            <li>body 参数必须用 struct，不能直接写 map 或 JSON</li>
+            <li>Gin-swagger 对 Go 版本敏感，低于 1.24 的 Go 需要旧版本</li>
+        </ul>
+    </main>
+</div>
+</body>
+</html>
