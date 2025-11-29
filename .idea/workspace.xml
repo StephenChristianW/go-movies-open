@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0306249-c929-4ba8-b6aa-623f223110dc" name="Changes" comment="" />
+    <list default="true" id="a0306249-c929-4ba8-b6aa-623f223110dc" name="Changes" comment="首次提交" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +40,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "preferences.updates"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -89,6 +89,10 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="首次提交" />
+    <option name="LAST_COMMIT_MESSAGE" value="首次提交" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
